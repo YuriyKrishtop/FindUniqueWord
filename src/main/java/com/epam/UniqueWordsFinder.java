@@ -45,13 +45,14 @@ public class UniqueWordsFinder {
     private static void addWordToListOfBiggestUniqueWords(String key, int val) {
         if (listOfBiggestUniqueWords.isEmpty()) {
             listOfBiggestUniqueWords.add(key);
-        }
-        if (val == 1) {
-            if (key.length() == listOfBiggestUniqueWords.get(0).length()) {
-                listOfBiggestUniqueWords.add(key);
-            } else if (key.length() > listOfBiggestUniqueWords.get(0).length()) {
-                listOfBiggestUniqueWords.clear();
-                listOfBiggestUniqueWords.add(key);
+        } else {
+            if (val == 1) {
+                if (key.length() == listOfBiggestUniqueWords.get(0).length()) {
+                    listOfBiggestUniqueWords.add(key);
+                } else if (key.length() > listOfBiggestUniqueWords.get(0).length()) {
+                    listOfBiggestUniqueWords.clear();
+                    listOfBiggestUniqueWords.add(key);
+                }
             }
         }
     }
