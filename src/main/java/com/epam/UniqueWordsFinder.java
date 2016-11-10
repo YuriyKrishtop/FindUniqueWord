@@ -12,15 +12,19 @@ import java.util.Map;
 public class UniqueWordsFinder {
     private static List<String> listOfBiggestUniqueWords = new ArrayList<>();
     private static Map<String, Integer> mapOfUniqueWords = new HashMap<>();
+    private static Runtime runtime = Runtime.getRuntime();
 
     public static List<String> getListOfBiggestUniqueWords(String fileName) {
         try (FileInputStream fileWords = new FileInputStream(fileName);
-             InputStreamReader inputStreamReader = new InputStreamReader(fileWords, "utf8");) {
+             InputStreamReader inputStreamReader = new InputStreamReader(fileWords);) {
             BufferedReader inFile = new BufferedReader(inputStreamReader);
             String currentLine;
             while ((currentLine = inFile.readLine()) != null) {
                 String[] words = currentLine.split("[^a-zA-Z']+");
                 putWordToMapOfUniqueWords(words);
+                if(runtime.freeMemory() < 1024*1024) {
+                    mapOfUniqueWords.clear();
+                }
             }
         } catch (IOException e) {
             System.out.println(e);
@@ -31,6 +35,7 @@ public class UniqueWordsFinder {
 
     private static void putWordToMapOfUniqueWords(String[] words) {
         for (String word : words) {
+//            if()
             if (!word.isEmpty()) {
                 if (mapOfUniqueWords.containsKey(word)) {
                     int oldVal = mapOfUniqueWords.get(word);
